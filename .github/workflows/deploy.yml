@@ -13,5 +13,3 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2
 
-      - name: SSH ke Server
-        run: ssh root@172.30.0.54 'cd /var/www/html/project &&git pull &&npm install && pm2 restart server'
