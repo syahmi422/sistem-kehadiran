@@ -14,4 +14,4 @@ jobs:
         uses: actions/checkout@v2
 
       - name: SSH ke Server
-        run: ssh user@server-ip 'cd /var/www/html/project &&git pull &&npm install && pm2 restart server'
+        run: ssh root@172.30.0.54 'cd /var/www/html/project &&git pull &&npm install && pm2 restart server'
