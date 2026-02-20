@@ -1,18 +1,126 @@
 <!DOCTYPE html>
-<html>
+<html lang="ms">
 <head>
-    <title>Sistem Kehadiran</title>
-</head>
+    <meta charset="UTF-8">
+    <title>Sistem Kehadiran Pelajar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            padding: 20px;
+        }
 
+        h1 {
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        input {
+            padding: 8px;
+            width: 70%;
+        }
+
+        button {
+            padding: 8px 12px;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 8px;
+            margin-top: 5px;
+            background: #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hadir {
+            background: #c8f7c5;
+        }
+
+        .tidak {
+            background: #f7c5c5;
+        }
+
+        .summary {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
 <body>
 
-<h1>Sistem Kehadiran Pelajar</h1>
+<div class="container">
+    <h1>Sistem Kehadiran Pelajar</h1>
 
-<p>Sila tekan butang di bawah untuk merekod kehadiran anda.</p>
+    <input type="text" id="namaPelajar" placeholder="Masukkan nama pelajar">
+    <button onclick="tambahPelajar()">Tambah</button>
 
-<button onclick="alert('Kehadiran berjaya direkodkan!')">
-    Rekod Kehadiran
-</button>
+    <ul id="senaraiPelajar"></ul>
+
+    <div class="summary" id="ringkasan"></div>
+</div>
+
+<script>
+    let jumlahHadir = 0;
+
+    function tambahPelajar() {
+        const nama = document.getElementById("namaPelajar").value;
+        if (nama === "") return;
+
+        const li = document.createElement("li");
+        li.innerHTML = `
+            ${nama}
+            <div>
+                <button onclick="tandaHadir(this)">Hadir</button>
+                <button onclick="tandaTidak(this)">Tidak Hadir</button>
+            </div>
+        `;
+
+        document.getElementById("senaraiPelajar").appendChild(li);
+        document.getElementById("namaPelajar").value = "";
+        kemaskiniRingkasan();
+    }
+
+    function tandaHadir(button) {
+        const li = button.parentElement.parentElement;
+        if (!li.classList.contains("hadir")) {
+            li.classList.remove("tidak");
+            li.classList.add("hadir");
+            jumlahHadir++;
+            kemaskiniRingkasan();
+        }
+    }
+
+    function tandaTidak(button) {
+        const li = button.parentElement.parentElement;
+        if (li.classList.contains("hadir")) {
+            jumlahHadir--;
+        }
+        li.classList.remove("hadir");
+        li.classList.add("tidak");
+        kemaskiniRingkasan();
+    }
+
+    function kemaskiniRingkasan() {
+        document.getElementById("ringkasan").innerText =
+            "Jumlah pelajar hadir: " + jumlahHadir;
+    }
+</script>
 
 </body>
 </html>
